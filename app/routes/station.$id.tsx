@@ -23,23 +23,24 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 export default function Index() {
   const loaderData = useLoaderData<typeof loader>();
   return (
-    <div className="m-10 mx-auto max-w-96">
+    <div className="sm:py-5 mx-auto sm:max-w-96">
       <Navbar />
-
-      {!!loaderData.length &&
-        loaderData.map((monitor) => (
-          <DepartureCard
-            key={JSON.stringify(monitor)}
-            station={monitor.locationStop.properties.title}
-            directions={monitor.lines.map((line) => ({
-              destination: line.towards,
-              line: line.name as Line,
-              times: line.departures.departure.map(
-                (t) => t.departureTime.countdown
-              ),
-            }))}
-          />
-        ))}
+      <div className="px-2">
+        {!!loaderData.length &&
+          loaderData.map((monitor) => (
+            <DepartureCard
+              key={JSON.stringify(monitor)}
+              station={monitor.locationStop.properties.title}
+              directions={monitor.lines.map((line) => ({
+                destination: line.towards,
+                line: line.name as Line,
+                times: line.departures.departure.map(
+                  (t) => t.departureTime.countdown
+                ),
+              }))}
+            />
+          ))}
+      </div>
     </div>
   );
 }
