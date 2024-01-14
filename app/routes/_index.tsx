@@ -56,8 +56,8 @@ export const loader = async () => {
 export default function Index() {
   const loaderData = useLoaderData<typeof loader>();
   return (
-    <div className="p-10">
-      <h1 className="text-3xl font-bold underline text-violet-600">
+    <div className="m-10 mx-auto max-w-96">
+      <h1 className="text-3xl font-bold text-violet-600">
         Welcome to Gasostation
       </h1>
       {!!loaderData.length &&
@@ -68,9 +68,9 @@ export default function Index() {
             directions={monitor.lines.map((line) => ({
               destination: line.towards,
               line: line.name as Line,
-              times: line.departures.departure
-                .slice(0, 2)
-                .map((t) => t.departureTime.countdown),
+              times: line.departures.departure.map(
+                (t) => t.departureTime.countdown
+              ),
             }))}
           />
         ))}

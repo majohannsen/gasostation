@@ -13,7 +13,7 @@ const DepartureCard: FC<Props> = ({ station, directions }) => {
       <h1 className="text-3xl font-bold">{station}</h1>
       <ul>
         {directions.map(({ line, destination, times }) =>
-          times.map((time) => (
+          times.slice(0, 2).map((time) => (
             <li className="flex flex-row gap-2" key={destination + time}>
               <div>{line}</div>
               <div>{destination}</div>
