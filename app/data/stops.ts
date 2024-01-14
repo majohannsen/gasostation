@@ -1,4 +1,4 @@
-const stops: {
+export type Stop = {
   StopID: number;
   DIVA: number | null;
   StopText: string;
@@ -6,7 +6,8 @@ const stops: {
   MunicipalityID: number | null;
   Longitude: number | null;
   Latitude: number | null;
-}[] = [
+};
+const stops: Stop[] = [
   {
     StopID: 3,
     DIVA: null,
