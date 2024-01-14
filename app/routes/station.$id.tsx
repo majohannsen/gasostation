@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import DepartureCard, { Line } from "~/components/DepartureCard";
-import getMonitors from "~/functions/getMonitors";
+import fetchMonitors from "~/functions/getMonitors";
 import getStopIDs from "~/functions/getStopIds";
 
 export const meta: MetaFunction = () => {
@@ -13,7 +13,10 @@ export const meta: MetaFunction = () => {
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   console.log("params.id:", params.id);
-  return getMonitors(getStopIDs(Number(params.id)));
+  const stops = getStopIDs(Number(params.id));
+  if (stops.length) {
+    return fetchMonitors(stops);
+  } else throw new Response("", { status: 404 });
 };
 
 export default function Index() {

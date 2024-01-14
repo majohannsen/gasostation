@@ -20,7 +20,7 @@ export type Monitor = {
   }[];
 };
 
-export default async function getMonitors(stopIds: (number | string)[]) {
+export default async function fetchMonitors(stopIds: (number | string)[]) {
   const res = await fetch(
     "http://www.wienerlinien.at/ogd_realtime/monitor?" +
       stopIds.map((id) => "stopId=" + id).join("&")
