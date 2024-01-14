@@ -19,26 +19,28 @@ export const loader = async () => {
 export default function Index() {
   const loaderData = useLoaderData<typeof loader>();
   return (
-    <div className="m-10 mx-auto max-w-96">
+    <div className="sm:py-5 mx-auto sm:max-w-96">
       <Navbar />
-      <h1 className="text-3xl font-bold text-violet-600">
-        Welcome to Gasostation
-      </h1>
-      {!!loaderData.length &&
-        loaderData.map((monitor) => (
-          <DepartureCard
-            key={JSON.stringify(monitor)}
-            station={monitor.locationStop.properties.title}
-            directions={monitor.lines.map((line) => ({
-              destination: line.towards,
-              line: line.name as Line,
-              times: line.departures.departure.map(
-                (t) => t.departureTime.countdown
-              ),
-            }))}
-            limit={2}
-          />
-        ))}
+      <div className="px-2">
+        <h1 className="text-3xl font-bold text-violet-600">
+          Welcome to Gasostation
+        </h1>
+        {!!loaderData.length &&
+          loaderData.map((monitor) => (
+            <DepartureCard
+              key={JSON.stringify(monitor)}
+              station={monitor.locationStop.properties.title}
+              directions={monitor.lines.map((line) => ({
+                destination: line.towards,
+                line: line.name as Line,
+                times: line.departures.departure.map(
+                  (t) => t.departureTime.countdown
+                ),
+              }))}
+              limit={2}
+            />
+          ))}
+      </div>
     </div>
   );
 }

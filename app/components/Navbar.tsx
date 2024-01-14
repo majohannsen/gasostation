@@ -42,13 +42,17 @@ export default function Navbar() {
         {!!search.length && !!suggestions.length && (
           <div className="absolute bg-slate-200 w-full mt-1">
             {suggestions.map((suggestion) => (
-              <Link
+              <div
                 key={suggestion.DIVA}
-                to={"/station/" + suggestion.DIVA}
-                onClick={() => setSearch("")}
+                className="border-slate-400 border-t first:border-t-0"
               >
-                <div>{suggestion.PlatformText}</div>
-              </Link>
+                <Link
+                  to={"/station/" + suggestion.DIVA}
+                  onClick={() => setSearch("")}
+                >
+                  <div>{suggestion.PlatformText}</div>
+                </Link>
+              </div>
             ))}
           </div>
         )}
