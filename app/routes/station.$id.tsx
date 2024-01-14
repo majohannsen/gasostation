@@ -1,6 +1,7 @@
 import { LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import DepartureCard, { Line } from "~/components/DepartureCard";
+import Navbar from "~/components/Navbar";
 import fetchMonitors from "~/functions/getMonitors";
 import getStopIDs from "~/functions/getStopIds";
 
@@ -23,6 +24,8 @@ export default function Index() {
   const loaderData = useLoaderData<typeof loader>();
   return (
     <div className="m-10 mx-auto max-w-96">
+      <Navbar />
+
       {!!loaderData.length &&
         loaderData.map((monitor) => (
           <DepartureCard
