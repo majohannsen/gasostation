@@ -14,8 +14,13 @@ export default function Index() {
       <h1 className="text-3xl font-bold underline text-violet-600">
         Welcome to Gasostation
       </h1>
-      <DepartureCard station="Gasometer" />
-      <DepartureCard station="Karlsplatz" />
+      <DepartureCard
+        station="Gasometer"
+        directions={[
+          { line: "U3", destination: "Simmering", time: 2 },
+          { line: "U3", destination: "Ottakring", time: 3 },
+        ]}
+      />
     </div>
   );
 }
