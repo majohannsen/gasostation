@@ -1,10 +1,11 @@
 import { json, type MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import DepartureCard from "~/components/DepartureCard";
+import DepartureCard, { Line } from "~/components/DepartureCard";
 
 type Monitor = {
   locationStop: {
     properties: {
+      name: string; // DIVA Nummer der Haltestelle (=Haltestellennummer der el. Fahrplanauskunft)
       title: string; // Name der Haltestelle
     };
   };
@@ -30,14 +31,26 @@ export const meta: MetaFunction = () => {
 
 export const loader = async () => {
   const res = await fetch(
-    "http://www.wienerlinien.at/ogd_realtime/monitor?stopId=147"
+    "http://www.wienerlinien.at/ogd_realtime/monitor?stopId=4934&stopId=4941"
   );
   const data = await res.json();
   const monitors: Monitor[] = data.data.monitors;
-  console.log("data:", data);
-  console.log("monitors:", monitors);
-  if (monitors.length) return json(monitors);
-  else return json([]);
+  const cleanedMonitors: Monitor[] = [];
+  if (monitors.length) {
+    monitors.forEach((monitor) => {
+      const existingMonitor = cleanedMonitors.find(
+        (m) =>
+          (m.locationStop.properties.name =
+            monitor.locationStop.properties.name)
+      );
+      if (existingMonitor) {
+        existingMonitor.lines.push(...monitor.lines);
+      } else {
+        cleanedMonitors.push(monitor);
+      }
+    });
+    return json(cleanedMonitors);
+  } else return json([]);
 };
 
 export default function Index() {
@@ -50,12 +63,15 @@ export default function Index() {
       {!!loaderData.length &&
         loaderData.map((monitor) => (
           <DepartureCard
-            key=""
+            key={JSON.stringify(monitor)}
             station={monitor.locationStop.properties.title}
-            directions={[
-              { line: "U3", destination: "Simmering", time: 2 },
-              { line: "U3", destination: "Ottakring", time: 3 },
-            ]}
+            directions={monitor.lines.map((line) => ({
+              destination: line.towards,
+              line: line.name as Line,
+              times: line.departures.departure
+                .slice(0, 2)
+                .map((t) => t.departureTime.countdown),
+            }))}
           />
         ))}
     </div>
