@@ -36,6 +36,7 @@ export default function Index() {
                 (t) => t.departureTime.countdown
               ),
             }))}
+            limit={2}
           />
         ))}
     </div>
