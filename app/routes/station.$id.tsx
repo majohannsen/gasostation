@@ -1,4 +1,4 @@
-import { type MetaFunction } from "@remix-run/node";
+import { LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import DepartureCard, { Line } from "~/components/DepartureCard";
 import getMonitors from "~/functions/getMonitors";
@@ -11,17 +11,15 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader = async () => {
-  return getMonitors(getStopIDs(60201749));
+export const loader = async ({ params }: LoaderFunctionArgs) => {
+  console.log("params.id:", params.id);
+  return getMonitors(getStopIDs(Number(params.id)));
 };
 
 export default function Index() {
   const loaderData = useLoaderData<typeof loader>();
   return (
     <div className="m-10 mx-auto max-w-96">
-      <h1 className="text-3xl font-bold text-violet-600">
-        Welcome to Gasostation
-      </h1>
       {!!loaderData.length &&
         loaderData.map((monitor) => (
           <DepartureCard
