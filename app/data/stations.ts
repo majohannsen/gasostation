@@ -1,3 +1,5 @@
+// data source: https://www.data.gv.at/katalog/dataset/wiener-linien-echtzeitdaten-via-datendrehscheibe-wien#resources
+// date: 2024-01-14
 export type Station = {
   DIVA: number | null;
   PlatformText: string;
