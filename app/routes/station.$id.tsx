@@ -8,8 +8,8 @@ import getStopIDs from "~/functions/getStopIds";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "Gasostation" },
+    { name: "description", content: "Wiener Ubahn Infos" },
   ];
 };
 
