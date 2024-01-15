@@ -38,17 +38,17 @@ export default function Navbar() {
           onChange={(e) => setSearch(e.currentTarget.value)}
         />
         {!!search.length && !!suggestions.length && (
-          <div className="absolute bg-slate-200 w-full mt-1">
+          <div className="absolute w-full mt-1">
             {suggestions.map((suggestion) => (
               <div
                 key={suggestion.DIVA}
-                className="border-slate-400 border-t first:border-t-0"
+                className="border-slate-400 border-t first:border-t-0 bg-slate-200 first:rounded-t-md last:rounded-b-md"
               >
                 <Link
                   to={"/station/" + suggestion.DIVA}
                   onClick={() => setSearch("")}
                 >
-                  <div>{suggestion.PlatformText}</div>
+                  <div className="px-3 py-2">{suggestion.PlatformText}</div>
                 </Link>
               </div>
             ))}
@@ -57,7 +57,7 @@ export default function Navbar() {
       </div>
 
       <div className="w-6 h-6">
-      <TimeIcon />
+        <TimeIcon />
       </div>
     </div>
   );
