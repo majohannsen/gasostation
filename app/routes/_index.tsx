@@ -34,6 +34,7 @@ export default function Index() {
             directions={monitor.lines.map((line) => ({
               destination: line.towards,
               line: line.name as Line,
+              type: line.type,
               times: line.departures.departure.map((t) => t.departureTime),
             }))}
             limit={2}

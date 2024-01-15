@@ -10,6 +10,7 @@ export type Monitor = {
   lines: {
     name: string; // Name der Linie (e.g.: 13A)
     towards: string; // Name des Ziels (e.g.: Burggasse, Stadthalle U)
+    type: string; // Fahrzeugtyp (ptTram, ...)
     departures: {
       departure: {
         departureTime: {

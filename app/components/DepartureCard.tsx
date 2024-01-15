@@ -1,19 +1,25 @@
 import { FC } from "react";
 import { DepartureTime } from "~/functions/getMonitors";
+import MonitorLine from "./MonitorLine";
 
 export type Line = "U1" | "U2" | "U3" | "U4" | "U5" | "U6";
 
 type Props = {
   station: string;
-  directions: { line: Line; destination: string; times: DepartureTime[] }[];
+  directions: {
+    line: Line;
+    type: string;
+    destination: string;
+    times: DepartureTime[];
+  }[];
   limit?: number;
   sort?: boolean;
 };
 
 const DepartureCard: FC<Props> = ({ station, directions, limit, sort }) => {
   const sortedTimes = directions
-    .map(({ line, destination, times }) =>
-      times.slice(0, limit).map((time) => ({ line, destination, time }))
+    .map((direction) =>
+      direction.times.slice(0, limit).map((time) => ({ ...direction, time }))
     )
     .flat()
     .sort(
@@ -27,28 +33,27 @@ const DepartureCard: FC<Props> = ({ station, directions, limit, sort }) => {
       <h1 className="text-3xl font-bold">{station}</h1>
       {sort ? (
         <ul className="flex flex-col gap-2">
-          {directions.map(({ line, destination, times }, i) => (
+          {directions.map(({ times, ...direction }, i) => (
             <li key={i}>
               <ul>
                 {times.slice(0, limit).map((time) => (
-                  <li className="flex flex-row gap-2" key={destination + time}>
-                    <div>{line}</div>
-                    <div>{destination}</div>
-                    <div>{time.countdown} min</div>
-                  </li>
+                  <MonitorLine
+                    key={direction.destination + time}
+                    {...direction}
+                    time={time}
+                  />
                 ))}
               </ul>
             </li>
           ))}
         </ul>
       ) : (
-        sortedTimes.map(({ line, destination, time }) => {
+        sortedTimes.map(({ line, type, destination, time }) => {
           return (
-            <li className="flex flex-row gap-2" key={destination + time}>
-              <div>{line}</div>
-              <div>{destination}</div>
-              <div>{time.countdown} min</div>
-            </li>
+            <MonitorLine
+              key={destination + time}
+              {...{ line, type, destination, time }}
+            />
           );
         })
       )}
