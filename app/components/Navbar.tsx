@@ -1,8 +1,8 @@
 import { Link, useLocation } from "@remix-run/react";
 import { useEffect, useState } from "react";
-import SearchIcon from "~/components/icons/search";
 import stations, { Station } from "~/data/stations";
 import HomeIcon from "./icons/home";
+import TimeIcon from "./icons/time";
 
 export default function Navbar() {
   const location = useLocation();
@@ -20,23 +20,21 @@ export default function Navbar() {
   }, [search]);
 
   return (
-    <div className="p-2 bg-slate-300 flex flex-row gap-2 items-center">
-      {location.pathname !== "/" && (
-        <Link to="/">
-          <div className="w-8 h-8">
+    <div className="p-2 flex flex-row gap-2 items-center justify-between">
+      <div className="w-6 h-6">
+        {location.pathname !== "/" && (
+          <Link to="/">
             <HomeIcon />
-          </div>
-        </Link>
-      )}
-      <div className="w-8 h-8">
-        <SearchIcon />
+          </Link>
+        )}
       </div>
+
       <div className="relative">
         <input
-          className="p-0.5 px-1.5 relative"
+          className="p-2 px-3 rounded-md relative bg-slate-200"
           type="text"
           value={search}
-          placeholder="Suchen ..."
+          placeholder="Station suchen"
           onChange={(e) => setSearch(e.currentTarget.value)}
         />
         {!!search.length && !!suggestions.length && (
@@ -56,6 +54,10 @@ export default function Navbar() {
             ))}
           </div>
         )}
+      </div>
+
+      <div className="w-6 h-6">
+      <TimeIcon />
       </div>
     </div>
   );

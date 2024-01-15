@@ -23,9 +23,7 @@ export default function Index() {
 
   return (
     <PageWrapper sort={sort} setSort={setSort}>
-      <h1 className="text-3xl font-bold text-violet-600">
-        Welcome to Gasostation
-      </h1>
+      
       {!!loaderData.length &&
         loaderData.map((monitor) => (
           <DepartureCard

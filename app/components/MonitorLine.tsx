@@ -31,7 +31,7 @@ const MonitorLine: FC<Props> = ({ line, type, destination, time }) => {
       <div
         className={classNames(
           `bg-${type === METRO_TYPE ? line : type}`,
-          "rounded-md py-0.5 px-2 my-1"
+          "rounded-md py-0.5 px-2 my-1 text-white"
         )}
       >
         {line}

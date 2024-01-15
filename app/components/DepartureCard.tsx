@@ -30,7 +30,7 @@ const DepartureCard: FC<Props> = ({ station, directions, limit, sort }) => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold">{station}</h1>
+      <h1 className="text-xl font-bold">{station}</h1>
       {sort ? (
         <ul className="flex flex-col gap-2">
           {directions.map(({ times, ...direction }, i) => (
