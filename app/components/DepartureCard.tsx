@@ -1,7 +1,9 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Monitor } from "~/functions/getMonitors";
 import MonitorLine from "./MonitorLine";
+import StarIcon from "./icons/star";
 
+const LIKED_STATIONS_KEY = "likedStations";
 export type Line = "U1" | "U2" | "U3" | "U4" | "U5" | "U6";
 
 type Props = {
@@ -11,8 +13,8 @@ type Props = {
 };
 
 const DepartureCard: FC<Props> = ({ monitor, limit, sort }) => {
-  // const stationID = monitor.locationStop.properties.name;
-  const station = monitor.locationStop.properties.title;
+  const stationID = monitor.locationStop.properties.name;
+  const stationName = monitor.locationStop.properties.title;
 
   const directions = monitor.lines.map((line) => ({
     destination: line.towards,
@@ -32,9 +34,52 @@ const DepartureCard: FC<Props> = ({ monitor, limit, sort }) => {
         new Date(b.time.timeReal || b.time.timePlanned).getTime()
     );
 
+  const [hasLiked, setHasLiked] = useState<boolean>();
+
+  useEffect(() => {
+    try {
+      const likedStations = window.localStorage.getItem(LIKED_STATIONS_KEY);
+      if (likedStations) {
+        const parsedStations: unknown[] = JSON.parse(likedStations);
+        setHasLiked(!!parsedStations.find((v) => v === stationID));
+      }
+    } catch (error) {
+      setHasLiked(false);
+    }
+  }, [stationID]);
+
+  useEffect(() => {
+    if (hasLiked !== undefined) {
+      let parsedStations: string[] = [];
+      try {
+        const likedStations = window.localStorage.getItem(LIKED_STATIONS_KEY);
+        if (likedStations) {
+          parsedStations = JSON.parse(likedStations);
+        }
+        if (hasLiked) {
+          if (!parsedStations.find((v) => v == stationID))
+            parsedStations.push(stationID);
+        } else {
+          parsedStations = parsedStations.filter((v) => v !== stationID);
+        }
+      } catch (error) {
+        parsedStations = [stationID];
+      }
+      window.localStorage.setItem(
+        LIKED_STATIONS_KEY,
+        JSON.stringify(parsedStations)
+      );
+    }
+  }, [hasLiked, stationID]);
+
   return (
     <div>
-      <h1 className="text-xl font-bold">{station}</h1>
+      <div className="flex items-center justify-between flex-row">
+        <h1 className="text-xl font-bold">{stationName}</h1>
+        <button onClick={() => setHasLiked(!hasLiked)} className="w-6 h-6">
+          <StarIcon filled={hasLiked} />
+        </button>
+      </div>
       {sort ? (
         <ul className="flex flex-col gap-2">
           {directions.map(({ times, ...direction }, i) => (
