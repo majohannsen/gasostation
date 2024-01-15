@@ -13,12 +13,17 @@ export type Monitor = {
     departures: {
       departure: {
         departureTime: {
+          timePlanned: string; // Abfahrtzeit laut Fahrplan
+          timeReal?: string; // Prognostizierte Abfahrtzeit (Echtzeit)
           countdown: number; // Verbleibende Minuten bis zur Abfahrt
         };
       }[];
     };
   }[];
 };
+
+export type DepartureTime =
+  Monitor["lines"][number]["departures"]["departure"][number]["departureTime"];
 
 export default async function fetchMonitors(stopIds: (number | string)[]) {
   const res = await fetch(
