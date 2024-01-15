@@ -1,22 +1,26 @@
 import { FC } from "react";
-import { DepartureTime } from "~/functions/getMonitors";
+import { Monitor } from "~/functions/getMonitors";
 import MonitorLine from "./MonitorLine";
 
 export type Line = "U1" | "U2" | "U3" | "U4" | "U5" | "U6";
 
 type Props = {
-  station: string;
-  directions: {
-    line: Line;
-    type: string;
-    destination: string;
-    times: DepartureTime[];
-  }[];
+  monitor: Monitor;
   limit?: number;
   sort?: boolean;
 };
 
-const DepartureCard: FC<Props> = ({ station, directions, limit, sort }) => {
+const DepartureCard: FC<Props> = ({ monitor, limit, sort }) => {
+  // const stationID = monitor.locationStop.properties.name;
+  const station = monitor.locationStop.properties.title;
+
+  const directions = monitor.lines.map((line) => ({
+    destination: line.towards,
+    line: line.name as Line,
+    type: line.type,
+    times: line.departures.departure.map((t) => t.departureTime),
+  }));
+
   const sortedTimes = directions
     .map((direction) =>
       direction.times.slice(0, limit).map((time) => ({ ...direction, time }))

@@ -1,7 +1,7 @@
 import { type MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
-import DepartureCard, { Line } from "~/components/DepartureCard";
+import DepartureCard from "~/components/DepartureCard";
 import PageWrapper from "~/components/PageWrapper";
 import fetchMonitors from "~/functions/getMonitors";
 import getStopIDs from "~/functions/getStopIds";
@@ -30,13 +30,7 @@ export default function Index() {
         loaderData.map((monitor) => (
           <DepartureCard
             key={JSON.stringify(monitor)}
-            station={monitor.locationStop.properties.title}
-            directions={monitor.lines.map((line) => ({
-              destination: line.towards,
-              line: line.name as Line,
-              type: line.type,
-              times: line.departures.departure.map((t) => t.departureTime),
-            }))}
+            monitor={monitor}
             limit={2}
             sort={sort}
           />
