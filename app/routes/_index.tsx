@@ -28,7 +28,7 @@ export default function Index() {
       {!!loaderData.length &&
         loaderData.map((monitor) => (
           <DepartureCard
-            key={JSON.stringify(monitor)}
+            key={monitor.locationStop.properties.name}
             monitor={monitor}
             limit={2}
             sort={sort}

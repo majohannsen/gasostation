@@ -87,7 +87,7 @@ const DepartureCard: FC<Props> = ({ monitor, limit, sort }) => {
               <ul>
                 {times.slice(0, limit).map((time) => (
                   <MonitorLine
-                    key={direction.destination + time}
+                    key={direction.destination + time.countdown}
                     {...direction}
                     time={time}
                   />
@@ -100,7 +100,7 @@ const DepartureCard: FC<Props> = ({ monitor, limit, sort }) => {
         sortedTimes.map(({ line, type, destination, time }) => {
           return (
             <MonitorLine
-              key={destination + time}
+              key={destination + time.countdown}
               {...{ line, type, destination, time }}
             />
           );
