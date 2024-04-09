@@ -3,7 +3,7 @@ import { Monitor } from "~/functions/getMonitors";
 import MonitorLine from "./MonitorLine";
 import StarIcon from "./icons/star";
 
-const LIKED_STATIONS_KEY = "likedStations";
+export const LIKED_STATIONS_KEY = "likedStations";
 export type Line = "U1" | "U2" | "U3" | "U4" | "U5" | "U6";
 
 type Props = {
