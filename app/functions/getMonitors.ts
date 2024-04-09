@@ -38,8 +38,8 @@ export default async function fetchMonitors(stopIds: (number | string)[]) {
     monitors.forEach((monitor) => {
       const existingMonitor = cleanedMonitors.find(
         (m) =>
-          (m.locationStop.properties.name =
-            monitor.locationStop.properties.name)
+          m.locationStop.properties.name ===
+          monitor.locationStop.properties.name
       );
       if (existingMonitor) {
         existingMonitor.lines.push(...monitor.lines);

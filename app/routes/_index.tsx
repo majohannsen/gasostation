@@ -14,7 +14,9 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async () => {
-  return fetchMonitors(getStopIDs(60201749));
+  const divas = [60201749, 60200657];
+  const stopIDs = divas.flatMap((diva) => getStopIDs(diva));
+  return fetchMonitors(stopIDs);
 };
 
 export default function Index() {
@@ -23,7 +25,6 @@ export default function Index() {
 
   return (
     <PageWrapper sort={sort} setSort={setSort}>
-      
       {!!loaderData.length &&
         loaderData.map((monitor) => (
           <DepartureCard
