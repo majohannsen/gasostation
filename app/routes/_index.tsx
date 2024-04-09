@@ -39,8 +39,7 @@ export default function Index() {
         likedStations?.map((s) => "likedStations=" + s).join("&");
       console.log("submit");
 
-      if (fetcher.state == "idle")
-        setTimeout(() => fetcher.load(fetchString), 2000);
+      if (fetcher.state == "idle") fetcher.load(fetchString);
     }
     console.log("likedStations:", likedStations);
   }, [data, fetcher, likedStations]);
