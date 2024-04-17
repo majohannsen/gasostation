@@ -14,7 +14,6 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  console.log("params.id:", params.id);
   const stops = getStopIDs(Number(params.id));
   if (stops.length) {
     return fetchMonitors(stops);

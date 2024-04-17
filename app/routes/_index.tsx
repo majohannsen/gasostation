@@ -37,16 +37,12 @@ export default function Index() {
       const fetchString =
         "/stations?" +
         likedStations?.map((s) => "likedStations=" + s).join("&");
-      console.log("submit");
 
       if (fetcher.state == "idle") fetcher.load(fetchString);
     }
-    console.log("likedStations:", likedStations);
   }, [data, fetcher, likedStations]);
 
   useEffect(() => {
-    console.log("fetcher.state:", fetcher.state);
-    console.log("fetcher.data:", fetcher.data);
     setData(fetcher.data as Monitor[]);
   }, [fetcher.state, fetcher]);
 
