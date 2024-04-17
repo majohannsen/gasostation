@@ -77,31 +77,32 @@ const DepartureCard: FC<Props> = ({ monitor, limit, sort, allwaysOpen }) => {
 
   return (
     <div>
-      <div className="flex items-center justify-between flex-row">
-        <h1 className="text-xl font-bold">{stationName}</h1>
-        <div className="flex flex-row items-center gap-2">
+      <div className="flex items-center gap-2 flex-row">
+        <button
+          className="flex flex-row justify-between grow items-center gap-2"
+          onClick={() => setOpen(!open)}
+        >
+          <h1 className="text-xl font-bold">{stationName}</h1>
           {!allwaysOpen && (
-            <button onClick={() => setOpen(!open)}>
-              <PiTriangleBold
-                className={classNames("h-4 w-4 transition", {
-                  "rotate-0": open,
-                  "rotate-180": !open,
-                })}
-              />
-            </button>
+            <PiTriangleBold
+              className={classNames("h-4 w-4 transition", {
+                "rotate-0": open,
+                "rotate-180": !open,
+              })}
+            />
           )}
-          <button onClick={() => setHasLiked(!hasLiked)}>
-            {hasLiked ? (
-              <PiStarFill
-                className={classNames("w-6 h-6", { "fill-black": hasLiked })}
-              />
-            ) : (
-              <PiStarBold
-                className={classNames("w-6 h-6", { "fill-black": hasLiked })}
-              />
-            )}
-          </button>
-        </div>
+        </button>
+        <button onClick={() => setHasLiked(!hasLiked)}>
+          {hasLiked ? (
+            <PiStarFill
+              className={classNames("w-6 h-6", { "fill-black": hasLiked })}
+            />
+          ) : (
+            <PiStarBold
+              className={classNames("w-6 h-6", { "fill-black": hasLiked })}
+            />
+          )}
+        </button>
       </div>
       {open && (
         <>
