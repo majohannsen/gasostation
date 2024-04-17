@@ -33,6 +33,7 @@ export default function Index() {
             key={JSON.stringify(monitor)}
             monitor={monitor}
             sort={sort}
+            allwaysOpen
           />
         ))}
     </PageWrapper>

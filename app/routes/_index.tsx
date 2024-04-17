@@ -52,15 +52,17 @@ export default function Index() {
 
   return (
     <PageWrapper sort={sort} setSort={setSort}>
-      {!!data?.length &&
-        data.map((monitor) => (
-          <DepartureCard
-            key={monitor.locationStop.properties.name}
-            monitor={monitor}
-            limit={2}
-            sort={sort}
-          />
-        ))}
+      <div className="flex flex-col gap-3">
+        {!!data?.length &&
+          data.map((monitor) => (
+            <DepartureCard
+              key={monitor.locationStop.properties.name}
+              monitor={monitor}
+              limit={2}
+              sort={sort}
+            />
+          ))}
+      </div>
     </PageWrapper>
   );
 }

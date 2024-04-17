@@ -1,8 +1,7 @@
 import { Link, useLocation } from "@remix-run/react";
 import { useEffect, useState } from "react";
+import { PiHouseBold } from "react-icons/pi";
 import stations, { Station } from "~/data/stations";
-import HomeIcon from "./icons/home";
-import TimeIcon from "./icons/time";
 
 export default function Navbar() {
   const location = useLocation();
@@ -24,7 +23,7 @@ export default function Navbar() {
       <div className="w-6 h-6">
         {location.pathname !== "/" && (
           <Link to="/">
-            <HomeIcon />
+            <PiHouseBold className="h-full w-full" />
           </Link>
         )}
       </div>
@@ -56,9 +55,7 @@ export default function Navbar() {
         )}
       </div>
 
-      <div className="w-6 h-6">
-        <TimeIcon />
-      </div>
+      <div className="w-6 h-6"></div>
     </div>
   );
 }
